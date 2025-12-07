@@ -324,9 +324,9 @@ HTML_TEMPLATE = """
         
         <div class="main-content">
             <div class="tabs">
-                <button class="tab active" onclick="switchTab('detect')">AI检测</button>
-                <button class="tab" onclick="switchTab('humanize')">人性化处理</button>
-                <button class="tab" onclick="switchTab('process')">一键处理</button>
+                <button class="tab active" onclick="switchTab('detect', event)">AI检测</button>
+                <button class="tab" onclick="switchTab('humanize', event)">人性化处理</button>
+                <button class="tab" onclick="switchTab('process', event)">一键处理</button>
             </div>
             
             <!-- AI检测标签页 -->
@@ -367,15 +367,15 @@ HTML_TEMPLATE = """
                 <div class="form-group">
                     <label>处理强度：</label>
                     <div class="intensity-select">
-                        <div class="intensity-option" data-intensity="light" onclick="selectIntensity('humanize', 'light')">
+                        <div class="intensity-option" data-intensity="light" onclick="selectIntensity('humanize', 'light', event)">
                             <div><strong>轻度</strong></div>
                             <div style="font-size: 0.9em; color: #666;">保守处理</div>
                         </div>
-                        <div class="intensity-option selected" data-intensity="medium" onclick="selectIntensity('humanize', 'medium')">
+                        <div class="intensity-option selected" data-intensity="medium" onclick="selectIntensity('humanize', 'medium', event)">
                             <div><strong>中度</strong></div>
                             <div style="font-size: 0.9em; color: #666;">推荐选项</div>
                         </div>
-                        <div class="intensity-option" data-intensity="heavy" onclick="selectIntensity('humanize', 'heavy')">
+                        <div class="intensity-option" data-intensity="heavy" onclick="selectIntensity('humanize', 'heavy', event)">
                             <div><strong>重度</strong></div>
                             <div style="font-size: 0.9em; color: #666;">全面改写</div>
                         </div>
@@ -409,15 +409,15 @@ HTML_TEMPLATE = """
                 <div class="form-group">
                     <label>处理强度：</label>
                     <div class="intensity-select">
-                        <div class="intensity-option" data-intensity="light" onclick="selectIntensity('process', 'light')">
+                        <div class="intensity-option" data-intensity="light" onclick="selectIntensity('process', 'light', event)">
                             <div><strong>轻度</strong></div>
                             <div style="font-size: 0.9em; color: #666;">保守处理</div>
                         </div>
-                        <div class="intensity-option selected" data-intensity="medium" onclick="selectIntensity('process', 'medium')">
+                        <div class="intensity-option selected" data-intensity="medium" onclick="selectIntensity('process', 'medium', event)">
                             <div><strong>中度</strong></div>
                             <div style="font-size: 0.9em; color: #666;">推荐选项</div>
                         </div>
-                        <div class="intensity-option" data-intensity="heavy" onclick="selectIntensity('process', 'heavy')">
+                        <div class="intensity-option" data-intensity="heavy" onclick="selectIntensity('process', 'heavy', event)">
                             <div><strong>重度</strong></div>
                             <div style="font-size: 0.9em; color: #666;">全面改写</div>
                         </div>
@@ -458,12 +458,12 @@ HTML_TEMPLATE = """
             process: 'medium'
         };
         
-        function switchTab(tabName) {
+        function switchTab(tabName, evt) {
             // 切换标签样式
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            event.target.classList.add('active');
+            evt.target.classList.add('active');
             
             // 切换内容
             document.querySelectorAll('.tab-content').forEach(content => {
@@ -472,13 +472,13 @@ HTML_TEMPLATE = """
             document.getElementById(tabName + '-tab').classList.add('active');
         }
         
-        function selectIntensity(tab, intensity) {
+        function selectIntensity(tab, intensity, evt) {
             currentIntensity[tab] = intensity;
             const container = document.getElementById(tab + '-tab');
             container.querySelectorAll('.intensity-option').forEach(option => {
                 option.classList.remove('selected');
             });
-            event.currentTarget.classList.add('selected');
+            evt.currentTarget.classList.add('selected');
         }
         
         async function detectText() {
